@@ -5,5 +5,6 @@ data class MovieUiModel(
     val title: String,
     val year: String,
     val imageUrl: String,
+    val description: String,
     val favorite: Boolean,
 )

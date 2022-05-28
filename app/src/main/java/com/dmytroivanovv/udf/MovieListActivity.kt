@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,8 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.dmytroivanovv.udf.ui.theme.UnidirectionalDataFlowTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +64,8 @@ fun MovieListScreen(
 
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 8.dp)
+        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         moviesViewStates.forEach { uiState ->
             item {
@@ -82,7 +88,10 @@ fun LinearMovie(
 ) {
     Row(modifier = modifier) {
         AsyncImage(
-            modifier = Modifier.size(64.dp),
+            modifier = Modifier
+                .height(200.dp)
+                .width(130.dp),
+            contentScale = ContentScale.FillBounds,
             model = movie.imageUrl,
             contentDescription = movie.title
         )
@@ -92,9 +101,9 @@ fun LinearMovie(
                 .weight(1f)
                 .fillMaxWidth()
         ) {
-            Text(text = movie.title)
+            Text(text = movie.title, fontWeight = FontWeight.ExtraBold, fontSize = 16.sp)
             Text(text = movie.year)
-            Text(text = movie.favorite.toString())
+            Text(text = movie.description)
         }
     }
 }

@@ -57,6 +57,7 @@ object MovieListViewModelUtil {
             title = movie.title,
             year = movie.year.toString(),
             imageUrl = movie.imageUrl,
+            description = movie.description,
             favorite = movie.favorite
         )
     }
