@@ -13,7 +13,7 @@ interface MoviePresentationRepository {
 
 class InMemoryMoviePresentationRepositoryImpl @Inject constructor() : MoviePresentationRepository {
 
-    override val type = MutableStateFlow(MoviePresentationType.LINEAR)
+    override val type = MutableStateFlow(MoviePresentationType.GRID)
 
     override suspend fun set(newType: MoviePresentationType) {
         type.emit(newType)

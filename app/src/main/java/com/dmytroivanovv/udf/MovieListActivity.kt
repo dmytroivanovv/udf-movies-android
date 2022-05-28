@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
@@ -72,7 +72,10 @@ fun MovieListScreen(
                 when (uiState) {
                     MovieListUiItem.Empty -> Text(text = stringResource(id = R.string.movie_list_empty))
                     is MovieListUiItem.Error -> Text(text = uiState.text)
-                    is MovieListUiItem.GridMovies -> TODO()
+                    is MovieListUiItem.GridMovies -> GridMovies(
+                        movie1 = uiState.movie1,
+                        movie2 = uiState.movie2
+                    )
                     is MovieListUiItem.LinearMovie -> LinearMovie(movie = uiState.movie)
                     MovieListUiItem.Loading -> CircularProgressIndicator()
                 }
@@ -104,6 +107,39 @@ fun LinearMovie(
             Text(text = movie.title, fontWeight = FontWeight.ExtraBold, fontSize = 16.sp)
             Text(text = movie.year)
             Text(text = movie.description)
+        }
+    }
+}
+
+@Composable
+fun GridMovies(
+    modifier: Modifier = Modifier,
+    movie1: MovieUiModel,
+    movie2: MovieUiModel?
+) {
+    Row(modifier = modifier) {
+        AsyncImage(
+            modifier = Modifier
+                .height(280.dp)
+                .weight(1f),
+            contentScale = ContentScale.FillBounds,
+            model = movie1.imageUrl,
+            contentDescription = movie1.title
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+        Box(
+            modifier = Modifier
+                .height(280.dp)
+                .weight(1f)
+        ) {
+            if (movie2 != null) {
+                AsyncImage(
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.FillBounds,
+                    model = movie2.imageUrl,
+                    contentDescription = movie2.title
+                )
+            }
         }
     }
 }

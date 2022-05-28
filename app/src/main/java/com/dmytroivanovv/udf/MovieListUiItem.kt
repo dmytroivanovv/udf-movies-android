@@ -7,8 +7,8 @@ sealed class MovieListUiItem {
     ): MovieListUiItem()
 
     data class GridMovies(
-        val leftMovie: MovieUiModel,
-        val rightMovie: MovieUiModel?
+        val movie1: MovieUiModel,
+        val movie2: MovieUiModel?
     ): MovieListUiItem()
 
     object Loading : MovieListUiItem()
