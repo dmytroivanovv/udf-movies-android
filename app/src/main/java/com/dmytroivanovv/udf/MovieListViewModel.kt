@@ -52,7 +52,7 @@ class MovieListViewModelImpl @Inject constructor(
 
     private fun downloadMovieList() {
         downloadMovieListJob?.cancel()
-        downloadMovieListJob = viewModelScope.launch(coroutineDispatchers.default) {
+        downloadMovieListJob = viewModelScope.launch {
             combine(
                 getMoviesUseCase.getMovies(),
                 moviePresentationRepository.type
