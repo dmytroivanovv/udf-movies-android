@@ -4,14 +4,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-interface MoviePresentationRepository {
+interface MovieVisualPresentationTypeRepository {
 
     val type: StateFlow<MoviePresentationType>
 
     suspend fun set(newType: MoviePresentationType)
 }
 
-class InMemoryMoviePresentationRepositoryImpl @Inject constructor() : MoviePresentationRepository {
+class InMemoryMovieVisualPresentationTypeRepositoryImpl @Inject constructor() : MovieVisualPresentationTypeRepository {
 
     override val type = MutableStateFlow(MoviePresentationType.GRID)
 
