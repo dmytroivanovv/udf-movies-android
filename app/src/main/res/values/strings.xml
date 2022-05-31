@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Movies (Unidirectional data flow)</string>
+    <string name="movie.toolbar_title">Movies</string>
     <string name="movie.list_empty">Empty list</string>
 </resources>
