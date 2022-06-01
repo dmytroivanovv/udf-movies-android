@@ -2,11 +2,11 @@ package com.dmytroivanovv.udf
 
 sealed class MovieListUiItem {
 
-    data class LinearMovie(
+    data class ListMovie(
         val movie: MovieUiModel
     ): MovieListUiItem()
 
-    data class GridMovies(
+    data class GridMovie(
         val movie1: MovieUiModel,
         val movie2: MovieUiModel?
     ): MovieListUiItem()

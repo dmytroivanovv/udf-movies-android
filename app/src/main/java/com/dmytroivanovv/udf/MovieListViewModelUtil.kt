@@ -30,7 +30,7 @@ object MovieListViewModelUtil {
         movies: List<MovieDomainModel>
     ): List<MovieListUiItem> {
         return movies.map { movie ->
-            MovieListUiItem.LinearMovie(
+            MovieListUiItem.ListMovie(
                 movie = mapDomainMovieToUiState(movie = movie)
             )
         }
@@ -42,7 +42,7 @@ object MovieListViewModelUtil {
         return movies.windowed(size = 2, step = 2, partialWindows = true) { bundle ->
             val movie1 = bundle[0]
             val movie2 = bundle.getOrNull(1)
-            MovieListUiItem.GridMovies(
+            MovieListUiItem.GridMovie(
                 movie1 = mapDomainMovieToUiState(movie = movie1),
                 movie2 = movie2?.let { movie ->
                     mapDomainMovieToUiState(movie = movie)

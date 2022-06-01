@@ -121,12 +121,12 @@ fun MovieListScreen(
                         when (uiState) {
                             MovieListUiItem.Empty -> Text(text = stringResource(id = R.string.movie_list_empty))
                             is MovieListUiItem.Error -> Text(text = uiState.text)
-                            is MovieListUiItem.GridMovies -> GridMovies(
+                            is MovieListUiItem.GridMovie -> GridMovies(
                                 movie1 = uiState.movie1,
                                 movie2 = uiState.movie2,
                                 onFavoriteClicked = viewModel::onFavoriteClicked
                             )
-                            is MovieListUiItem.LinearMovie -> LinearMovie(
+                            is MovieListUiItem.ListMovie -> LinearMovie(
                                 movie = uiState.movie,
                                 onFavoriteClicked = viewModel::onFavoriteClicked
                             )
