@@ -85,8 +85,8 @@ class MovieListViewModelImpl @Inject constructor(
     override fun onChangeVisualPresentationClicked() {
         viewModelScope.launch {
             val newType = when (movieVisualPresentationTypeRepository.type.value) {
-                MoviePresentationType.LINEAR -> MoviePresentationType.GRID
-                MoviePresentationType.GRID -> MoviePresentationType.LINEAR
+                MoviePresentationType.LIST -> MoviePresentationType.GRID
+                MoviePresentationType.GRID -> MoviePresentationType.LIST
             }
             movieVisualPresentationTypeRepository.set(newType = newType)
         }

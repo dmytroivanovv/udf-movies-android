@@ -21,12 +21,12 @@ object MovieListViewModelUtil {
         }
 
         return when (presentationType) {
-            MoviePresentationType.LINEAR -> mapToLinearUiStates(movies = movies)
+            MoviePresentationType.LIST -> mapToListUiStates(movies = movies)
             MoviePresentationType.GRID -> mapToGridUiStates(movies = movies)
         }
     }
 
-    private fun mapToLinearUiStates(
+    private fun mapToListUiStates(
         movies: List<MovieDomainModel>
     ): List<MovieListUiItem> {
         return movies.map { movie ->
