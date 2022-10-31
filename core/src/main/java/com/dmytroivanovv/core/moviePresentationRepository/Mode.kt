@@ -1,6 +1,6 @@
 package com.dmytroivanovv.core.moviePresentationRepository
 
-enum class MoviePresentationType {
+enum class Mode {
     LIST,
     GRID
 }

@@ -7,8 +7,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.dmytroivanovv.core.CoroutineDispatchers
 import com.dmytroivanovv.core.favoriteMoviesRepository.FavoriteMoviesRepository
-import com.dmytroivanovv.core.moviePresentationRepository.MovieVisualPresentationTypeRepository
-import com.dmytroivanovv.core.moviePresentationRepository.MoviePresentationType
+import com.dmytroivanovv.core.moviePresentationRepository.ModeRepository
+import com.dmytroivanovv.core.moviePresentationRepository.Mode
 import com.dmytroivanovv.core.movieUseCase.GetMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -19,15 +19,15 @@ import javax.inject.Inject
 
 interface MovieListViewModel {
 
-    val moviesViewStates: LiveData<List<MovieListUiItem>>
+    val movieViewStates: LiveData<List<MovieListUiItem>>
 
-    val presentationType: LiveData<MoviePresentationType>
+    val mode: LiveData<Mode>
 
     fun onFavoriteClicked(movie: MovieUiModel)
 
     fun onRetryClicked()
 
-    fun onChangeVisualPresentationClicked()
+    fun onChangeModeClicked()
 }
 
 @HiltViewModel
@@ -35,15 +35,15 @@ class MovieListViewModelImpl @Inject constructor(
     private val coroutineDispatchers: CoroutineDispatchers,
     private val getMoviesUseCase: GetMoviesUseCase,
     private val favoriteMoviesRepository: FavoriteMoviesRepository,
-    private val movieVisualPresentationTypeRepository: MovieVisualPresentationTypeRepository
+    private val modeRepository: ModeRepository
 ) : ViewModel(), MovieListViewModel {
 
     private var downloadMovieListJob: Job? = null
 
-    override val moviesViewStates =
+    override val movieViewStates =
         MutableLiveData<List<MovieListUiItem>>(listOf(MovieListUiItem.Loading))
 
-    override val presentationType = movieVisualPresentationTypeRepository.type.asLiveData()
+    override val mode = modeRepository.type.asLiveData()
 
     init {
         downloadMovieList()
@@ -54,16 +54,16 @@ class MovieListViewModelImpl @Inject constructor(
         downloadMovieListJob = viewModelScope.launch {
             combine(
                 getMoviesUseCase.getMovies(),
-                movieVisualPresentationTypeRepository.type
+                modeRepository.type
             ) { moviesResult, presentationType ->
                 MovieListViewModelUtil.mapToUiStates(
                     moviesResult = moviesResult,
                     presentationType = presentationType
                 )
             }.onStart {
-                moviesViewStates.postValue(listOf(MovieListUiItem.Loading))
+                movieViewStates.postValue(listOf(MovieListUiItem.Loading))
             }.collect { viewStates ->
-                moviesViewStates.postValue(viewStates)
+                movieViewStates.postValue(viewStates)
             }
         }
     }
@@ -82,13 +82,13 @@ class MovieListViewModelImpl @Inject constructor(
         downloadMovieList()
     }
 
-    override fun onChangeVisualPresentationClicked() {
+    override fun onChangeModeClicked() {
         viewModelScope.launch {
-            val newType = when (movieVisualPresentationTypeRepository.type.value) {
-                MoviePresentationType.LIST -> MoviePresentationType.GRID
-                MoviePresentationType.GRID -> MoviePresentationType.LIST
+            val newType = when (modeRepository.type.value) {
+                Mode.LIST -> Mode.GRID
+                Mode.GRID -> Mode.LIST
             }
-            movieVisualPresentationTypeRepository.set(newType = newType)
+            modeRepository.set(newType = newType)
         }
     }
 }

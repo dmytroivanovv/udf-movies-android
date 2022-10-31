@@ -2,8 +2,8 @@ package com.dmytroivanovv.udf.di
 
 import com.dmytroivanovv.core.favoriteMoviesRepository.FavoriteMoviesRepository
 import com.dmytroivanovv.core.favoriteMoviesRepository.InMemoryFavoriteMoviesRepositoryImpl
-import com.dmytroivanovv.core.moviePresentationRepository.InMemoryMovieVisualPresentationTypeRepositoryImpl
-import com.dmytroivanovv.core.moviePresentationRepository.MovieVisualPresentationTypeRepository
+import com.dmytroivanovv.core.moviePresentationRepository.ModeRepositoryImpl
+import com.dmytroivanovv.core.moviePresentationRepository.ModeRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,6 +23,6 @@ abstract class SingletonBindingModule {
     @Binds
     @Singleton
     abstract fun bindMoviePresentationRepository(
-        impl: InMemoryMovieVisualPresentationTypeRepositoryImpl
-    ): MovieVisualPresentationTypeRepository
+        impl: ModeRepositoryImpl
+    ): ModeRepository
 }

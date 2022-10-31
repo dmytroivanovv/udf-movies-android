@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
-import com.dmytroivanovv.core.moviePresentationRepository.MoviePresentationType
+import com.dmytroivanovv.core.moviePresentationRepository.Mode
 import com.dmytroivanovv.udf.ui.theme.UnidirectionalDataFlowTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -73,12 +73,12 @@ fun MovieListScreen(
     modifier: Modifier = Modifier,
     viewModel: MovieListViewModel
 ) {
-    val moviesViewStates: List<MovieListUiItem> by viewModel.moviesViewStates.observeAsState(
+    val movieViewStates: List<MovieListUiItem> by viewModel.movieViewStates.observeAsState(
         emptyList()
     )
 
-    val presentationType: MoviePresentationType by viewModel.presentationType.observeAsState(
-        MoviePresentationType.LIST
+    val presentationType: Mode by viewModel.mode.observeAsState(
+        Mode.LIST
     )
 
     Scaffold(
@@ -94,14 +94,14 @@ fun MovieListScreen(
                 },
                 actions = {
                     IconButton({
-                        viewModel.onChangeVisualPresentationClicked()
+                        viewModel.onChangeModeClicked()
                     }) {
                         Icon(
                             painter = painterResource(
                                 when (presentationType) {
-                                    MoviePresentationType.LIST ->
+                                    Mode.LIST ->
                                         R.drawable.ic_baseline_grid_on_24
-                                    MoviePresentationType.GRID ->
+                                    Mode.GRID ->
                                         R.drawable.ic_baseline_view_list_24
                                 }
                             ),
@@ -116,7 +116,7 @@ fun MovieListScreen(
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                moviesViewStates.forEach { uiState ->
+                movieViewStates.forEach { uiState ->
                     item {
                         when (uiState) {
                             MovieListUiItem.Empty -> Text(text = stringResource(id = R.string.movie_list_empty))

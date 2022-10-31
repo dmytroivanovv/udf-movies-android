@@ -1,13 +1,13 @@
 package com.dmytroivanovv.udf
 
-import com.dmytroivanovv.core.moviePresentationRepository.MoviePresentationType
+import com.dmytroivanovv.core.moviePresentationRepository.Mode
 import com.dmytroivanovv.core.movieUseCase.MovieDomainModel
 
 object MovieListViewModelUtil {
 
     fun mapToUiStates(
         moviesResult: Result<List<MovieDomainModel>>,
-        presentationType: MoviePresentationType
+        presentationType: Mode
     ): List<MovieListUiItem> {
         if (moviesResult.isFailure) {
             return listOf(
@@ -21,8 +21,8 @@ object MovieListViewModelUtil {
         }
 
         return when (presentationType) {
-            MoviePresentationType.LIST -> mapToListUiStates(movies = movies)
-            MoviePresentationType.GRID -> mapToGridUiStates(movies = movies)
+            Mode.LIST -> mapToListUiStates(movies = movies)
+            Mode.GRID -> mapToGridUiStates(movies = movies)
         }
     }
 
