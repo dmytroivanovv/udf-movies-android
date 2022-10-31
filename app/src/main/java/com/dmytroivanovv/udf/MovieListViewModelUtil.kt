@@ -7,7 +7,7 @@ object MovieListViewModelUtil {
 
     fun mapToUiStates(
         moviesResult: Result<List<MovieDomainModel>>,
-        presentationType: Mode
+        mode: Mode
     ): List<MovieListUiItem> {
         if (moviesResult.isFailure) {
             return listOf(
@@ -20,7 +20,7 @@ object MovieListViewModelUtil {
             return listOf(MovieListUiItem.Empty)
         }
 
-        return when (presentationType) {
+        return when (mode) {
             Mode.LIST -> mapToListUiStates(movies = movies)
             Mode.GRID -> mapToGridUiStates(movies = movies)
         }

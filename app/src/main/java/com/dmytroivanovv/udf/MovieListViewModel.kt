@@ -55,10 +55,10 @@ class MovieListViewModelImpl @Inject constructor(
             combine(
                 getMoviesUseCase.getMovies(),
                 modeRepository.type
-            ) { moviesResult, presentationType ->
+            ) { moviesResult, mode ->
                 MovieListViewModelUtil.mapToUiStates(
                     moviesResult = moviesResult,
-                    presentationType = presentationType
+                    mode = mode
                 )
             }.onStart {
                 movieViewStates.postValue(listOf(MovieListUiItem.Loading))
